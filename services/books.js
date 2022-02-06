@@ -1,6 +1,8 @@
 // all business functions defined in the service layer will not use the express objects (req, res,)
 // will consist of pure javascript code for these functions
 
+import { insert, selectAllBooks } from "../db/books.js";
+
 // in memory database
 const books = [
   {
@@ -23,19 +25,21 @@ const books = [
   }
 ];
 
-export function findAllBooks() {
-  return books;
+export async function findAllBooks() {
+  return selectAllBooks();
 }
 
 export function findBookById(id) {
   return books.find(book => book.id === id);
 }
 
-export function saveBook(book) {
-  const clonedBook = {...book};
+export async function saveBook(book) {
+  const result = await insert(book);
+  return result;
+  /* const clonedBook = {...book};
   clonedBook.id = books.length + 1;
   books.push(clonedBook);
-  return clonedBook;
+  return clonedBook; */
 }
 
 export function updateBook(id, updatedData) {

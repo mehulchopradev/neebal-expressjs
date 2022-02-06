@@ -1,7 +1,16 @@
+import { SqlError } from 'mariadb';
 import { findBookById, saveBook, findAllBooks, updateBook as update } from '../services/books.js';
 
-export function getAllBooks(req, res) {
-  res.send(findAllBooks());
+export async function getAllBooks(req, res) {
+  try {
+    const books = await findAllBooks();
+    res.send(books);
+  } catch (err) {
+    console.log(err);
+    if (err instanceof SqlError) {
+      res.status(500).send('Something went wrong. Please try again later');
+    }
+  }
 }
 
 export function getBook(req, res) {
@@ -18,11 +27,19 @@ export function getBook(req, res) {
   } */
 }
 
-export function createBook(req, res) {
+export async function createBook(req, res) {
   // collect data from the message body of a request
   const book = req.body;
-  // ?????
-  res.status(201).send(saveBook(book));
+
+  try {
+    const b = await saveBook(book);
+    res.status(201).send(b);
+  } catch (err) {
+    console.log(err);
+    if (err instanceof SqlError) {
+      res.status(500).send('Something went wrong. Please try again later');
+    }
+  }
 }
 
 export function updateBook(req, res) {

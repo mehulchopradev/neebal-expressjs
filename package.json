@@ -5,11 +5,16 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mehul chopra",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.5.5"
   }
 }

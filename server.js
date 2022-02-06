@@ -2,7 +2,10 @@ import express from "express";
 
 import booksRouter from "./routes/books.js";
 import authorsRouter from "./routes/authors.js";
+import usersRouter from "./routes/users.js";
 import ResourceNotFoundError from "./exceptions/resource-not-found-error.js";
+import { getConnection } from "./db/db-util.js";
+import { SqlError } from "mariadb";
 
 const app = express(); // express Application object
 
@@ -12,6 +15,7 @@ const PORT = 8080;
 app.use(express.json()); // useful to parse JSON data coming in the request
 app.use(booksRouter);
 app.use(authorsRouter);
+app.use(usersRouter);
 
 // common application level error handling middleware
 app.use((err, req, res, next) => {
